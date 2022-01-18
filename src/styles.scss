@@ -45,6 +45,18 @@ a {
     cursor: pointer;
 }
 
+button {
+    border: none;
+    outline: none;
+    color: #fff;
+    background-color: #4651f7;
+    cursor: pointer;
+    transition: .25s;
+    &:hover {
+        background-color: #2d37bb;
+    }
+}
+
 .container { 
     max-width: 1140px; 
     margin: 0 auto;

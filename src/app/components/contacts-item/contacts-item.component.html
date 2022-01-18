@@ -1,6 +1,0 @@
-<li class="contacts-item" *ngFor="let contact of contacts; index as i;" [id]="contact.id" (click)="modalOpen(true, i)">
-    <h2 class="contacts-item__title" *ngIf="isHasDifferentPrevFirstLetter(i, contact.name.charAt(0))">{{contact.name.charAt(0)}}</h2>
-    <a class="contacts-item__name">
-        <span>{{contact.name}}</span>
-    </a>
-</li>

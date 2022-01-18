@@ -1,6 +1,35 @@
-<ul class="contacts container">
-    <app-contacts-item ></app-contacts-item>
-    <!-- Здесь вызвать emit -->
-</ul>
-<app-modal *ngIf="isModalOpen" [(isOpen)]="isModalOpen"></app-modal>
-<!-- Сюда добавить модалку -->
+<div class="contacts-wrapper container">
+    <ul class="contacts">
+        <li class="contacts-item" *ngFor="let contact of contacts; index as i;" [id]="contact.id" (click)="modalOpen(i)">
+            <h2 class="contacts-item__title" *ngIf="isHasDifferentPrevFirstLetter(i, contact.name.charAt(0))">{{contact.name.charAt(0)}}</h2>
+            <a class="contacts-item__name">
+                <span>{{contact.name}}</span>
+            </a>
+        </li>
+    </ul>
+    <button type="button" class="contacts-add__btn"><span class="cross" (click)="addContact()">&times;</span></button>
+    <div class="modal" [ngClass]="{_open: isOpen}">
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <h2 class="modal-contact-name">{{name || "New user"}}</h2>
+                <span class="modal-close" (click)="modalClose()">&times;</span>
+            </div>
+            <div class="modal-data">
+                <div class="modal-data__group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" [(ngModel)]="name">
+                </div>
+                <div class="modal-data__group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" id="phone" [(ngModel)]="phone">
+                </div>
+                <div class="modal-data__group">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" [(ngModel)]="email">
+                </div>
+            </div>
+            <button type="button" (click)="saveModalData(id)">Save</button>
+        </div>
+    </div>
+</div>
+

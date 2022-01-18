@@ -10,7 +10,7 @@ export class GetContactsService {
   constructor(
     private http: HttpClient) { }
 
-  public getContacts(): Observable<any> {
+  public getContacts() {
     return this.http.get(this.baseApiUrl);
   }
 

@@ -1,10 +1,16 @@
 import { Contact } from './../../models/contact';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class StorageService{
-  contacts: BehaviorSubject<Array<Contact>> = new BehaviorSubject(null);
+  contacts = new Subject<Array<Contact>>();
+
+  public changeContacts(users: Array<Contact>) {
+    this.contacts.next(users); 
+ }
 
   public remove(key: string) {
     window.localStorage.removeItem(key);
