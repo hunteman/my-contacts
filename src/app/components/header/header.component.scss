@@ -1,0 +1,128 @@
+.header {
+  color: #fff;
+
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #4651f7;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
+
+  h1 {
+    padding: .8rem 0;
+  }
+
+  &-search {
+    position: relative;
+    margin-left: 2rem;
+    display: flex;
+    flex-grow: 1;
+    border-bottom: 1px solid #fff;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      background: #fff;
+      transition: .25s ease-in;
+      -webkit-transition: .25s ease-in;
+      -moz-transition: .25s ease-in;
+      -ms-transition: .25s ease-in;
+      -o-transition: .25s ease-in;
+    }
+
+    &:focus-within {
+        &::after {
+            width: 100%;
+        }
+    }
+
+    &__input {
+      background: transparent;
+      border: none;
+      flex-grow: 1;
+      color: #fff;
+      font-weight: 300;
+      font-size: 1.2rem;
+      padding: 0.5rem;
+
+      &::-webkit-input-placeholder {
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 300;
+        opacity: 0.8;
+        transition: 0.25s;
+        -webkit-transition: 0.25s;
+        -moz-transition: 0.25s;
+        -ms-transition: 0.25s;
+        -o-transition: 0.25s;
+      }
+
+      &::-moz-placeholder {
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 300;
+        opacity: 0.8;
+        transition: 0.25s;
+        -webkit-transition: 0.25s;
+        -moz-transition: 0.25s;
+        -ms-transition: 0.25s;
+        -o-transition: 0.25s;
+      }
+
+      &:-moz-placeholder {
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 300;
+        opacity: 0.8;
+        transition: 0.25s;
+        -webkit-transition: 0.25s;
+        -moz-transition: 0.25s;
+        -ms-transition: 0.25s;
+        -o-transition: 0.25s;
+      }
+
+      &:-ms-input-placeholder {
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 300;
+        opacity: 0.8;
+        transition: 0.25s;
+        -webkit-transition: 0.25s;
+        -moz-transition: 0.25s;
+        -ms-transition: 0.25s;
+        -o-transition: 0.25s;
+      }
+
+      &:focus {
+        outline: none;
+
+        &::-webkit-input-placeholder {
+          opacity: 0;
+        }
+
+        &::-moz-placeholder {
+          opacity: 0;
+        }
+
+        &:-moz-placeholder {
+          opacity: 0;
+        }
+
+        &:-ms-input-placeholder {
+          opacity: 0;
+        }
+      }
+    }
+
+    &__icon {
+      display: inline-block;
+      padding: 0.5rem;
+    }
+  }
+}

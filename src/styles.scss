@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+@mixin resp($min,
+$max) {
+    @media screen and (min-width: ($min + 'px')) and (max-width: ($max + 'px')) {
+        @content
+    }
+}
+
+$sbreak_xl: 1200;
+$sbreak_lg: 992;
+$sbreak_md: 768;
+$sbreak_sm: 576;
+
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 20px;
+    @include resp(0,
+    $sbreak_xl) {
+        font-size: 19px;
+    }
+    @include resp(0,
+    $sbreak_lg) {
+        font-size: 17px;
+    }
+    @include resp(0,
+    $sbreak_md) {
+        font-size: 15px;
+    }
+}
+
+body {
+    font-family: 'Roboto', sans-serif;;
+    color: #414141;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.container { 
+    max-width: 1140px; 
+    margin: 0 auto;
+    padding: 0 1rem;
+}

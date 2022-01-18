@@ -1,0 +1,23 @@
+<div class="modal" [ngClass]="{_open:isOpen}">
+    <div class="modal-wrapper">
+        <div class="modal-header">
+            <h2 class="modal-contact-name">Vasya</h2>
+            <span class="modal-close" (click)="isOpen=false">&times;</span>
+        </div>
+        <div class="modal-data">
+            <div class="modal-data__group">
+                <label for="name">Name:</label>
+                <input type="text" id="name">
+            </div>
+            <div class="modal-data__group">
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone">
+            </div>
+            <div class="modal-data__group">
+                <label for="email">Email:</label>
+                <input type="text" id="email">
+            </div>
+        </div>
+        <button type="button">Save</button>
+    </div>
+</div>
