@@ -8,6 +8,12 @@
     background-color: #4651f7;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
+
+    @media screen and (max-width: 500px) {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
   }
 
   h1 {
@@ -15,11 +21,18 @@
   }
 
   &-search {
+    max-width: 70%;
     position: relative;
     margin-left: 2rem;
     display: flex;
     flex-grow: 1;
     border-bottom: 1px solid #fff;
+    @media screen and (max-width: 500px) {
+      max-width: none;
+      width: 100%;
+      margin-left: 0;
+      margin-bottom: 1rem;
+    }
 
     &::after {
       content: '';

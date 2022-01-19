@@ -42,24 +42,15 @@ export class ContactsComponent {
       const sortedUsers = this.contacts.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
 
       this.storageService.write('users', sortedUsers);
-      this.storageService.contacts.next(this.storageService.read('users'));
     });
 
     this.storageService.contacts.subscribe((users) => {
-      this.contacts = users;
+      this.contacts = users.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
     });
   }
 
   public isHasDifferentPrevFirstLetter(i: number, firstLetter: string) {
-    if(this.contacts[i-1]) {
-      if(firstLetter !== this.contacts[i-1].name.charAt(0)) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return true;
-    }
+      return this.contacts[i-1] ? firstLetter !== this.contacts[i-1].name.charAt(0) : true;
   }
 
   clear() {
@@ -83,19 +74,24 @@ export class ContactsComponent {
   }
 
   public saveModalData(i: any) {
-    let idx = this.contacts.findIndex(c => c.id === i);
-
-    this.storageService.write('users', this.contacts.splice(idx, 1, {name: this.name, phone: this.phone, email: this.email, id: this.id}));
-    this.storageService.contacts.next(this.contacts);
-    this.isOpen = false;
-    this.clear();
-  }
-
-  public addContact() {
-    this.isOpen = true;
-
-    this.storageService.write('users', this.contacts.push({name: this.name, phone: this.phone, email: this.email, id: new Date().getTime().toString()}));
-    this.storageService.contacts.next(this.contacts);
+    if(i && i !== '') {
+      let idx = this.contacts.findIndex(c => c.id === i);
+      this.contacts.splice(idx, 1, {name: this.name, phone: this.phone, email: this.email, id: this.id});
+      this.storageService.write('users', this.contacts);
+      this.storageService.contacts.next(this.contacts);
+      this.isOpen = false;
+      this.clear();
+    } else {
+      let userId = JSON.stringify(Date.now());
+  
+      if(this.name || this.phone || this.email) {
+        this.contacts.push({name: this.name, phone: this.phone, email: this.email, id: userId});
+        this.storageService.write('users', this.contacts);
+        this.storageService.contacts.next(this.contacts);
+        this.isOpen = false;
+        this.clear();
+      }
+    }
   }
 
   public contactsFilter(searchValue: any) {
