@@ -1,3 +1,4 @@
+<app-header (onChanged)="contactsFilter($event)"></app-header>
 <div class="contacts-wrapper container">
     <ul class="contacts">
         <li class="contacts-item" *ngFor="let contact of contacts; index as i;" [id]="contact.id" (click)="modalOpen(i)">
@@ -9,7 +10,7 @@
     </ul>
     <button type="button" class="contacts-add__btn"><span class="cross" (click)="addContact()">&times;</span></button>
     <div class="modal" [ngClass]="{_open: isOpen}">
-        <div class="modal-wrapper">
+        <div class="modal-wrapper" #modalForm>
             <div class="modal-header">
                 <h2 class="modal-contact-name">{{name || "New user"}}</h2>
                 <span class="modal-close" (click)="modalClose()">&times;</span>

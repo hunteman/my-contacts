@@ -1,4 +1,4 @@
-import { Contact } from './../../models/contact';
+import { Contact } from 'src/app/models/contact';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 

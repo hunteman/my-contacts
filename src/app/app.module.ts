@@ -1,3 +1,5 @@
+import { GetContactsService } from './services/get-contacts.service';
+import { StorageService } from './services/storage.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -20,7 +22,10 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    StorageService,
+    GetContactsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

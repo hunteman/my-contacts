@@ -1,7 +1,7 @@
-import { StorageService } from './../../services/get-contacts-service/storage.service';
-import { GetContactsService } from '../../services/get-contacts-service/get-contacts.service';
+import { StorageService } from './../../services/storage.service';
+import { GetContactsService } from '../../services/get-contacts.service';
 import { Contact } from './../../models/contact';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-contacts',
@@ -10,7 +10,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   providers: [GetContactsService, StorageService]
 })
 export class ContactsComponent {
-  @Output() userReadAndChange = new EventEmitter();
+  @ViewChild("modalForm") modalForm: ElementRef|undefined;
   isOpen: boolean = false;
   isModalOpen: boolean = false;
   contacts: Array<Contact> = [];
@@ -26,20 +26,26 @@ export class ContactsComponent {
     private contactService: GetContactsService
     ) { }
 
+  @HostListener('document:mousedown', ['$event'])
+    onGlobalClick(event: Event): void {
+      if (!this.modalForm.nativeElement.contains(event.target)) {
+        this.isOpen = false;
+        this.clear();
+      }
+  }
+
   ngOnInit() {
     this.contactService.getContacts().subscribe((data:any) => {
       data.forEach((user: Contact) => {
         this.contacts.push(new Contact(user.name, user.phone, user.email, user.id));
       });
       const sortedUsers = this.contacts.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
-      console.log('sortedUsers: ', sortedUsers);
 
       this.storageService.write('users', sortedUsers);
       this.storageService.contacts.next(this.storageService.read('users'));
-    });  
+    });
 
     this.storageService.contacts.subscribe((users) => {
-      console.log('users: ', users);
       this.contacts = users;
     });
   }
@@ -57,7 +63,7 @@ export class ContactsComponent {
   }
 
   clear() {
-    this.name = '';  
+    this.name = '';
     this.phone = '';
     this.email = '';
     this.id = '';
@@ -65,7 +71,7 @@ export class ContactsComponent {
 
   public modalOpen(i: any) {
     this.isOpen = true;
-    this.name = this.contacts[i].name;  
+    this.name = this.contacts[i].name;
     this.phone = this.contacts[i].phone;
     this.email = this.contacts[i].email;
     this.id = this.contacts[i].id;
@@ -90,5 +96,15 @@ export class ContactsComponent {
 
     this.storageService.write('users', this.contacts.push({name: this.name, phone: this.phone, email: this.email, id: new Date().getTime().toString()}));
     this.storageService.contacts.next(this.contacts);
+  }
+
+  public contactsFilter(searchValue: any) {
+    if(searchValue !== '') {
+      const filteredContacts = this.storageService.read('users').filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()));
+
+      this.storageService.changeContacts(filteredContacts);
+    } else {
+      this.storageService.changeContacts(this.storageService.read('users'));
+    }
   }
 }
