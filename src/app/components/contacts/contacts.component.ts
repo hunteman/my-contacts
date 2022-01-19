@@ -42,11 +42,11 @@ export class ContactsComponent {
       const sortedUsers = this.contacts.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
 
       this.storageService.write('users', sortedUsers);
-      this.storageService.contacts.next(this.storageService.read('users'));
     });
 
     this.storageService.contacts.subscribe((users) => {
-      this.contacts = users;
+      this.contacts = users.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
+      console.log('this.contacts: ', this.contacts);
     });
   }
 
@@ -83,23 +83,29 @@ export class ContactsComponent {
   }
 
   public saveModalData(i: any) {
-    let idx = this.contacts.findIndex(c => c.id === i);
-
-    this.storageService.write('users', this.contacts.splice(idx, 1, {name: this.name, phone: this.phone, email: this.email, id: this.id}));
-    this.storageService.contacts.next(this.contacts);
-    this.isOpen = false;
-    this.clear();
-  }
-
-  public addContact() {
-    this.isOpen = true;
-
-    this.storageService.write('users', this.contacts.push({name: this.name, phone: this.phone, email: this.email, id: new Date().getTime().toString()}));
-    this.storageService.contacts.next(this.contacts);
+    if(i && i !== '') {
+      let idx = this.contacts.findIndex(c => c.id === i);
+      this.contacts.splice(idx, 1, {name: this.name, phone: this.phone, email: this.email, id: this.id});
+      this.storageService.write('users', this.contacts);
+      this.storageService.contacts.next(this.contacts);
+      this.isOpen = false;
+      this.clear();
+    } else {
+      let userId = JSON.stringify(Date.now());
+  
+      if(this.name || this.phone || this.email) {
+        this.contacts.push({name: this.name, phone: this.phone, email: this.email, id: userId});
+        this.storageService.write('users', this.contacts);
+        this.storageService.contacts.next(this.contacts);
+        this.isOpen = false;
+        this.clear();
+      }
+    }
   }
 
   public contactsFilter(searchValue: any) {
     if(searchValue !== '') {
+      console.log('this.storageService.read', this.storageService.read('users'));
       const filteredContacts = this.storageService.read('users').filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()));
 
       this.storageService.changeContacts(filteredContacts);

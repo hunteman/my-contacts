@@ -8,7 +8,7 @@
             </a>
         </li>
     </ul>
-    <button type="button" class="contacts-add__btn"><span class="cross" (click)="addContact()">&times;</span></button>
+    <button type="button" class="contacts-add__btn"><span class="cross" (click)="isOpen = true">&times;</span></button>
     <div class="modal" [ngClass]="{_open: isOpen}">
         <div class="modal-wrapper" #modalForm>
             <div class="modal-header">
