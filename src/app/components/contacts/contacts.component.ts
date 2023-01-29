@@ -35,18 +35,19 @@ export class ContactsComponent {
   }
 
   ngOnInit() {
-    this.contactService.getContacts().subscribe((data:any) => {
-      data.forEach((user: Contact) => {
-        this.contacts.push(new Contact(user.name, user.phone, user.email, user.id));
-      });
-      const sortedUsers = this.contacts.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
-
-      this.storageService.write('users', sortedUsers);
-    });
+    this.contacts = this.storageService.read('users');
 
     this.storageService.contacts.subscribe((users) => {
-      this.contacts = users.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
+      this.contacts = users;
     });
+
+    if(!this.contacts) {
+      this.contactService.getContacts().subscribe((data:Array<Contact>) => {
+        this.storageService.write('users', data);
+      });
+    }
+
+    this.contacts.sort((a: Contact, b: Contact) => a.name > b.name ? 1 : -1);
   }
 
   public isHasDifferentPrevFirstLetter(i: number, firstLetter: string) {

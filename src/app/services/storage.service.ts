@@ -16,13 +16,18 @@ export class StorageService{
     window.localStorage.removeItem(key);
   }
 
-  public write(key: string, value: any) {
+  public write(key: string, value: Array<Contact>) {
     window.localStorage.setItem(key, JSON.stringify(value));
+    this.changeContacts(value);
   }
 
   public read(key: string) {
-    const i = window.localStorage.getItem(key);
-    return i ? JSON.parse(i) : null;
+    const data = window.localStorage.getItem(key);
+    if(data) {
+      const dataParse = JSON.parse(data);
+      this.changeContacts(dataParse);
+      return dataParse;
+    }
   }
 
   public clear() {

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'https://demo.sibers.com/users'
+  api: 'https://jsonplaceholder.typicode.com/users'
+  // api: 'https://demo.sibers.com/users'
 };
 
 /*
