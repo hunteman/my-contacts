@@ -12,12 +12,14 @@ import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ContactsItemComponent } from './components/contacts-item/contacts-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     ContactsComponent,
+    ContactsItemComponent,
   ],
   imports: [
     BrowserModule,

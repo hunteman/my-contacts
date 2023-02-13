@@ -1,12 +1,9 @@
 <app-header (onChanged)="contactsFilter($event)"></app-header>
 <div class="contacts-wrapper container">
     <ul class="contacts">
-        <li class="contacts-item" *ngFor="let contact of contacts; index as i;" [id]="contact.id" (click)="modalOpen(i)">
+        <app-contacts-item [(contactName)]="contact.name" *ngFor="let contact of contactsSort(contacts); index as i;" (click)="modalOpen(i)">
             <h2 class="contacts-item__title" *ngIf="isHasDifferentPrevFirstLetter(i, contact.name.charAt(0))">{{contact.name.charAt(0)}}</h2>
-            <a class="contacts-item__name">
-                <span>{{contact.name}}</span>
-            </a>
-        </li>
+        </app-contacts-item>
     </ul>
     <button type="button" class="contacts-add__btn"><span class="cross" (click)="isOpen = true">&times;</span></button>
     <div class="modal" [ngClass]="{_open: isOpen}">

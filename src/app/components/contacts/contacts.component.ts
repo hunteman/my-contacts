@@ -46,8 +46,10 @@ export class ContactsComponent {
         this.storageService.write('users', data);
       });
     }
+  }
 
-    this.contacts.sort((a: Contact, b: Contact) => a.name > b.name ? 1 : -1);
+  contactsSort(contacts: Array<Contact>) {
+    return contacts.sort((a: Contact, b: Contact) => a.name > b.name ? 1 : -1);
   }
 
   public isHasDifferentPrevFirstLetter(i: number, firstLetter: string) {
